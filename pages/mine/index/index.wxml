@@ -1,0 +1,151 @@
+<!--pages/mine/index/index.wxml-->
+<import src="/dist/toast/index.wxml" />
+<view class='container'>
+  <zan-toast id="zan-toast-test"></zan-toast>
+  <view hidden='{{!isLogin}}'>
+    <view class='header'>
+
+      <view class='user-info'>
+        <view class='userHead' catchtap="_toggleUploadModal">
+          <image wx:if='{{userInfo.certification==1}}' class='identify' src='../../../images/icon/identifaction.png'></image>
+          <image wx:else class='identify' src='../../../images/icon/unidentifaction.png'></image>
+          <view class='avatarBox'>
+            <image class='avatar' mode='aspectFill' src="{{uploadAvatar?uploadAvatar:(userInfo?userInfo.avatarUrl:'')}}"></image>
+          </view>
+        </view>
+        <view class='info'>
+          <view class='item1'>
+            <view class='label' catchtap='_editName'>
+              <text>{{userInfo.name}}</text>
+              <image class='arrow arrow1' src="../../../images/icon/arrow@.png"></image>
+            </view>
+            <view class='label label-bottom' catchtap='_completeChildrenInfo'>
+              <text>完善孩子信息</text>
+              <image class='arrow arrow2' src="../../../images/icon/arrow@.png"></image>
+            </view>
+          </view>
+          <view class='item2' catchtap='_whatTangTuan'>
+            <image src='../../../images/icon/coin.png'></image>
+            <view class='line'></view>
+            <text>{{userInfo.tangtuan_coin>9999?'>1万':userInfo.tangtuan_coin}}个</text>
+          </view>
+        </view>
+      </view>
+
+    </view>
+
+    <view class='mySetting'>
+      <view class='mySetting-in'>
+        <view class='mine' catchtap='_goCollection'>
+          <view class='mine-in'>
+            <image src='' class='tubiao'></image>
+            <view>我的收藏</view>
+          </view>
+          <view class='mine-in'>
+            <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+          </view>
+        </view>
+        <view class='mine' catchtap='_goCharge'>
+          <view class='mine-in'>
+            <image src='' class='tubiao'></image>
+            <view>充值汤团</view>
+          </view>
+          <view class='mine-in'>
+            <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+          </view>
+        </view>
+        <view class='mine' catchtap='_goIdentify'>
+          <view class='mine-in'>
+            <image src='' class='tubiao'></image>
+            <view>实名认证</view>
+
+          </view>
+          <view class='mine-in'>
+            <zan-capsule color="{{certifiedData[userInfo.certification].color}}" leftText="认证" rightText="{{certifiedData[userInfo.certification].text}}" />
+            <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+          </view>
+        </view>
+        <view class='mine' style="position:relative">
+        <button style="position:absolute;top:0;left:0;opacity:0" open-type='contact'>kkkkkkkkkkkkkkkkkkkkkkkkkkk</button>
+          <view class='mine-in'>
+            <image src='' class='tubiao'></image>
+            <view>联系客服</view>
+          </view>
+          <view class='mine-in'>
+            <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+          </view>
+        </view>
+        <view class='mine' catchtap='_switchAccount'>
+          <view class='mine-in'>
+            <image src='' class='tubiao'></image>
+            <view>切换账号</view>
+          </view>
+          <view class='mine-in'>
+            <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+          </view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+  <view class='login-box' hidden='{{isLogin}}'>
+    <view class='btnbox'>
+      <view class='box'>
+        <button class='tel' bindtap='_toggleRegisterModal'>手机号登录</button>
+        <button class='weixin' open-type="getPhoneNumber" bindgetphonenumber="_getPhoneNumber">微信授权登录</button>
+      </view>
+    </view>
+
+    <zan-popup show="{{ showRegisterModal }}" bindclose="_toggleRegisterModal">
+      <view class="popup_container">
+        <view class="popup-header">
+          <text>手机号认证</text>
+        </view>
+        <view class="popup-body">
+          <view class='mobile-num'>
+            <view class="zan-cell zan-field">
+              <view class="zan-cell__hd zan-field__title">手机号</view>
+              <input style='text-align:left;font-size:22rpx;' type='number' name='tel' confirm-type='done' placeholder="请输入手机号" placeholder-style='font-size:22rpx;' bindinput='_getInputNumber' class="zan-field__input zan-cell__bd" maxlength='11' />
+              <view class="zan-cell__ft">
+                <button bindtap='{{disabled?"":"_getVerificationCode"}}' class="zan-btn zan-btn--mini zan-btn--default">{{time}}</button>
+              </view>
+            </view>
+          </view>
+          <view class='code'>
+            <view class="zan-cell zan-field">
+              <view class="zan-cell__hd zan-field__title">验证码</view>
+              <input style='text-align:left;font-size:22rpx;' name='code' confirm-type='done' bindinput='_getInputCode' placeholder="请输入短信验证码" placeholder-style='font-size:22rpx;' class="zan-field__input zan-cell__bd" />
+            </view>
+          </view>
+        </view>
+        <view class='popup-footer'>
+          <view catchtap="_toggleRegisterModal" class='cancel'>取消</view>
+          <view class='complete' bindtap='_getTokenFormServer'>完成</view>
+        </view>
+        <navigator class="popup-other" target="miniProgram" open-type="navigate" app-id="wx23feab8a454304ba" path="" extra-data="" version="release">前往红娘版</navigator>
+      </view>
+    </zan-popup>
+
+  </view>
+
+  <zan-popup type="bottom" show="{{ showUploadModal }}" bindclose="_toggleUploadModal">
+    <view class="uploadContainer">
+      <view class="title">上传头像</view>
+      <view class="tips">默认头像选择</view>
+      <view class="defaultAvatar">
+        <block wx:for="{{defaultAvatarUrl}}">
+          <view catchtap="_chooseAvatar" data-idx="{{index}}" data-url="{{item}}">
+            <image src="{{item}}" class="{{selectedAvatar==index?'selected-border':''}}"></image>
+            <text class="fa fa-check-circle" hidden="{{selectedAvatar==index?false:true}}"></text>
+          </view>
+        </block>
+      </view>
+      <view class="method1" hover-class="btn_hover" catchtap="_chooseImageFromAlbum">从相册选择</view>
+      <view class="method2" hover-class="btn_hover" catchtap="_chooseImageFromCamera">拍照</view>
+      <view class="distance"></view>
+      <view class="cancalBtn" hover-class="btn_hover" catchtap="{{selectedAvatar==-1?'_closeModal':'_chooseDefaultAvatar'}}">{{selectedAvatar==-1?'取消':'确定'}}</view>
+    </view>
+  </zan-popup>
+
+</view>

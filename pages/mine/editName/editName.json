@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "zan-toast": "../../../dist/toast/index"
+  }
+}

@@ -1,0 +1,230 @@
+/* pages/msg/index/index.wxss */
+
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+}
+
+.main {
+  padding: 20rpx;
+}
+
+.tab-nothing {
+  text-align: center;
+  color: #777;
+}
+
+.tab-content {
+  max-width: 750rpx;
+  background: #f6f6f6;
+  font-size: 26rpx;
+}
+
+.tab-content-children {
+  max-width: 750rpx;
+  height: 165rpx;
+  padding: 10rpx 20rpx;
+  background: #fff;
+  margin-bottom: 20rpx;
+  box-shadow: 0rpx 0rpx 7rpx 2rpx #ccc;
+  border-radius: 15rpx;
+}
+
+.info-main {
+  display: flex;
+  flex-direction: row;
+}
+
+.info-right {
+  width: 460rpx;
+  height: 155rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.info-head {
+  display: flex;
+  text-align: center;
+}
+
+.info-name {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin-right: 27rpx;
+}
+
+.info-name .item-name {
+  color: #7f7cf7;
+}
+
+.info-name .item-relationship {
+  color: #808080;
+  margin-left: 22rpx;
+}
+
+.info-name .item-clock {
+  position: absolute;
+  right: -60rpx;
+  color: #808080;
+  font-size: 22rpx;
+  line-height: 44rpx;
+}
+
+.info-name .redDot {
+  position: absolute;
+  right: -60rpx;
+  color: red;
+  line-height: 20rpx;
+}
+
+.fa-circle {
+  font-size: 24rpx;
+}
+
+.info-head .info-identification {
+  width: 30rpx;
+  height: 30rpx;
+  position: relative;
+  top: 7rpx;
+  margin-bottom: 10rpx;
+}
+
+.info-identification image {
+  width: 100%;
+  height: 100%;
+}
+
+.template {
+  display: inline;
+}
+
+.info-more {
+  margin: 20rpx 0;
+  color: #808080;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.new-message {
+  /* margin: 20rpx 0; */
+  color: #808080;
+  display: -webkit-box;
+  word-break: break-all;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  height: 50rpx;
+  line-height: 50rpx;
+}
+
+.info-more text {
+  padding: 5rpx 17rpx;
+  margin-right: 20rpx;
+  border-radius: 25rpx;
+  background-color: #f6f6f6;
+  margin-top: 20rpx;
+}
+
+.info-left {
+  height: 155rpx;
+}
+
+.info-left-image {
+  width: 157rpx;
+  height: 157rpx;
+  border-radius: 50%;
+}
+
+.info-sign {
+  color: #777;
+  margin-top: 37rpx;
+}
+
+.info-sign text {
+  white-space: nowrap;
+}
+
+/*遮罩*/
+
+.pink {
+  color: #f25d8e;
+  margin: 0 10rpx;
+}
+
+.zan-popup__mask {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup_container {
+  width: 601rpx;
+  height: 489rpx;
+  color: #000;
+  border-radius: 20rpx;
+  /* background-color: #F6F6F6; */
+  background-color: #f6f6f9;
+  position: relative;
+  top: -290rpx;
+}
+
+.popup-main {
+  padding: 27rpx;
+  text-align: center;
+}
+
+.content-head {
+  width: 100%;
+  height: 107rpx;
+}
+
+.content-head image {
+  width: 117rpx;
+  height: 97rpx;
+  margin: 0 auto;
+}
+
+.content-center .text1 {
+  font-size: 32rpx;
+}
+
+.content-center .text2 {
+  color: #808080;
+  font-size: 24rpx;
+  margin-top: 10rpx;
+}
+
+.content-center .chatBtnBox {
+  margin-top: 60rpx;
+}
+
+.content-center .chatBtn {
+  width: 437rpx;
+  height: 87rpx;
+  border-radius: 43rpx;
+  background-image: linear-gradient(to left, #f87e7f, #f25d8e);
+  margin: 0 auto;
+  color: #fff;
+  line-height: 87rpx;
+  font-size: 32rpx;
+}
+
+.content-footer {
+  margin-top: 27rpx;
+  font-size: 28rpx;
+  color: #808080;
+}
+
+.content-footer icon {
+  position: relative;
+  bottom: -77rpx;
+}

@@ -1,0 +1,107 @@
+<!--pages/guide/guide.wxml-->
+<zan-toast id="zan-toast-test"></zan-toast>
+<view class="section-top" hidden='{{loading}}'>
+  <view wx:for="{{title[currentQ]}}">
+    <image src="/images/icon_decorate_left.png"></image>
+    <text style='text-align:center;line-height:100rpx;'>{{item}}</text>
+    <image src="/images/icon_decorate_right.png"></image>
+  </view>
+</view>
+<view class="section-main" hidden='{{loading}}'>
+  <image src="/images/back.png" class="button-back" wx:if="{{currentQ!=0}}" bindtap='previousStep'></image>
+  <block wx:if="{{currentQ==0}}">
+    <view class="button-choose {{currentC_01===item.id?'choosed':''}}" bindtap='chooseForOne' wx:for="{{relationList}}" data-current="{{item.id}}">{{item.name}}</view>
+    <view class="other-login" bindtap='_otherLogin'>登陆其他账号</view>
+  </block>
+  <block wx:if="{{currentQ==1}}">
+    <view class="box-sex">
+      <view class="sex-main" bindtap='chooseForTwo' data-current="{{item.id}}" wx:for="{{sexList}}">
+        <image src='{{sexImgList[index]}}'></image>
+        <view class="sex-text {{currentC_02===item.id?'choosed':''}}">{{item.name}}</view>
+      </view>
+    </view>
+  </block>
+  <block wx:if="{{currentQ==2}}">
+    <picker-view indicator-class="picker-indicator" style="width: 85%; height: 350rpx;margin:50rpx auto;" value="{{cityValue}}" bindchange="bindChange" id="Q2">
+      <picker-view-column>
+        <view wx:for="{{cityData}}" style="line-height: 100rpx;text-align:center;font-size:34rpx;height:100rpx">{{item.name}}</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{cityData[currentCity].sub}}" style="line-height: 100rpx;text-align:center;font-size:34rpx;height:100rpx">{{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+    <view class="button-next" bindtap='nextStep'>下一步</view>
+  </block>
+  <block wx:if="{{currentQ==3}}">
+    <picker-view indicator-class="picker-indicator" style="width: 85%; height: 350rpx;margin:50rpx auto;" value="{{heightValue}}" bindchange="bindChange" id="Q3">
+      <picker-view-column>
+        <view wx:for="{{heightList}}" style="line-height: 100rpx;text-align:center;font-size:34rpx;height:100rpx">{{item}}cm</view>
+      </picker-view-column>
+    </picker-view>
+    <view class="button-next" bindtap='nextStep'>下一步</view>
+  </block>
+  <block wx:if="{{currentQ==4}}">
+    <picker-view indicator-class="picker-indicator" style="width: 85%; height: 350rpx;margin:50rpx auto;" value="{{dateValue}}" bindchange="bindChange" id="Q4">
+      <picker-view-column>
+        <view wx:for="{{years}}" style="line-height: 100rpx;text-align:center;font-size:34rpx;height:100rpx">{{item}}年</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{months}}" style="line-height: 100rpx;text-align:center;font-size:34rpx;height:100rpx">{{item}}月</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{days}}" style="line-height: 100rpx;text-align:center;font-size:34rpx;height:100rpx">{{item}}日</view>
+      </picker-view-column>
+    </picker-view>
+    <view class="button-next" bindtap='nextStep'>下一步</view>
+  </block>
+  <block wx:if="{{currentQ==5}}">
+    <view class="button-choose {{currentC_05===item.id?'choosed':''}}" bindtap='chooseForFive' wx:for="{{educationList}}" data-current="{{item.id}}">{{item.name}}</view>
+  </block>
+  <block wx:if="{{currentQ==6}}">
+    <picker-view indicator-class="picker-indicator" style="width: 85%; height: 350rpx;margin:50rpx auto;" value="{{jobValue}}" bindchange="bindChange" id="Q6">
+      <picker-view-column>
+        <view wx:for="{{jobList}}" style="line-height: 100rpx;text-align:center;font-size:34rpx;height:100rpx">{{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+    <view class="button-next" bindtap='nextStep'>下一步</view>
+  </block>
+  <block wx:if="{{currentQ==7}}">
+    <picker-view indicator-class="picker-indicator" style="width: 85%; height: 350rpx;margin:50rpx auto;" value="{{salaryValue}}" bindchange="bindChange" id="Q7">
+      <picker-view-column>
+        <view wx:for="{{salaryList}}" style="line-height: 100rpx;text-align:center;font-size:34rpx;height:100rpx">{{item.name}}</view>
+      </picker-view-column>
+    </picker-view>
+    <view class="button-next" bindtap='subInfo'>完成</view>
+  </block>
+</view>
+
+<view hidden='{{!loading}}'>
+  <view class="canvas1">
+    <view class="spinner1 spinnerMax">
+      <view class="spinner1 spinnerMid">
+        <view class="spinner1 spinnerMin"></view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<zan-popup show="{{ showModal }}" bindclose="_toggleModal" type="bottom">
+  <view class="popup_container">
+    <image src="/images/bg_popup.png" class="bg_popup"></image>
+    <view class="popup-main">
+      <view class="content-head">
+        新用户奖励!
+      </view>
+      <view class="content-center">
+        <image src="../../images/icon/coin.png" mode="aspectFit"></image>
+        <text class="pink">获赠<text style="font-size:40rpx">100</text>汤团</text>
+      </view>
+      <view class="content-footer">
+        <text style="text-align:center;font-size:">{{'畅享更多体验 \n 请下载亲家来了APP!'}}</text>
+        <view>
+          <icon type="cancel" color="white" size="35" catchtap="_toggleModal"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+</zan-popup>

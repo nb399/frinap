@@ -1,0 +1,81 @@
+<!--component/show_unit/show_unit.wxml-->
+
+<view class="tab-content-children" data-id='{{person.id}}' catchtap='_childDetail' wx:if="{{identity==1}}">
+  <view class="info-main">
+    <view class="info-left">
+      <image mode="aspectFill" class="info-left-image" src="{{person.parent.avatarUrl}}" />
+    </view>
+
+    <view class="info-right">
+      <view class='info-head'>
+        <view class="info-name">{{person.parent.name}}</view>
+        <view class='info-identification'>
+          <image wx:if="{{person.parent.certification==1}}" src='../../images/icon/icon_identification.png' mode='aspectFill'></image>
+          <image wx:elif="{{person.parent.certification!=1}}" src='../../images/icon/icon_unidentification.png' mode='aspectFill'></image>
+        </view>
+      </view>
+      <view class="info-basic">
+        <text>{{person.work_city}}</text>
+        <text>{{person.age}}</text>
+        <text>{{person.education.name}}</text>
+      </view>
+      <view class="info-more">
+        <text>{{person.job.name}}</text>
+        <text>{{person.height}}</text>
+        <text>{{person.salary.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-sign">
+    <text class="info-text">个性说明:{{person.personal_profile?person.personal_profile:'她没有填写个性简介'}}</text>
+  </view>
+
+  <view class="more-sign">
+    <view class="count">
+
+      <text class="iconfont caret-right">共{{person.total_count}}字</text>
+
+    </view>
+  </view>
+</view>
+
+
+<view class="tab-content-children" data-id='{{person.id}}' catchtap='_childDetail' wx:if="{{identity==2}}">
+  <view class="info-main">
+    <view class="info-left">
+      <image mode="aspectFill" class="info-left-image" src="{{person.avatarUrl}}" />
+    </view>
+
+    <view class="info-right">
+      <view class='info-head'>
+        <view class="info-name">{{person.name}}</view>
+        <view class='info-identification'>
+          <image wx:if="{{person.certification==1}}" src='../../images/icon/icon_redIdentifaction.png' mode='aspectFill'></image>
+          <image wx:elif="{{person.certification!=1}}" src='../../images/icon/icon_unidentification.png' mode='aspectFill'></image>
+        </view>
+      </view>
+      <view class="info-basic">
+      <text>{{person.user_workplace}}</text>
+        <text>{{person.age}}</text>
+        <text>{{person.user_sex.name}}</text>
+
+      </view>
+      <view class="info-more">
+        <text>{{person.user_job.name}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="info-sign">
+    <text class="info-text">红娘简介:{{person.user_profile?person.user_profile:'她没有填写个性简介'}}</text>
+  </view>
+
+  <view class="more-sign">
+    <view class="count">
+
+      <text class="iconfont caret-right">共{{person.total_count}}字</text>
+
+    </view>
+  </view>
+</view>

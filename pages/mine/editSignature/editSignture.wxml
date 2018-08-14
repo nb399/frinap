@@ -1,0 +1,10 @@
+<!--pages/mine/editSignature/editSignture.wxml-->
+<view class='container'>
+  <view class='content'>
+    <textarea placeholder='在此填写您孩子的个人简介' maxlength='500' placeholder-style='font-size:28rpx;color:#777;' bindinput="_getLength" value='{{signature}}'><text class='length'>{{length}}/500</text></textarea>
+        
+    <text style="font-size:24rpx;margin-top:6rpx">小提示：<text style="color:grey">(不能少于15字多于500字)</text> </text>
+
+    <button catchtap='_getSignature'>确认</button>
+  </view>
+</view>

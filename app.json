@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/mine/index/index",
+    "pages/msg/index/index",
+    "pages/template/template",
+    "pages/mine/children/children",
+    "pages/children_detail/children_detail",
+    "pages/mine/editSignature/editSignture",
+    "pages/mine/certified/certified",
+    "pages/msg/chat/chat",
+    "pages/mine/editName/editName",
+    "pages/guide/guide",
+    "pages/matcher_detail/matcher_detail",
+    "pages/matcher/matcher",
+    "pages/mine/charge/charge",
+    "pages/mine/collection/collection"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#f25d8e",
+    "navigationBarTitleText": "亲家来了Lite",
+    "navigationBarTextStyle": "white",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "borderStyle": "white",
+    "selectedColor": "#f25d8e",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/icon/home.png",
+        "selectedIconPath": "images/icon/home@selected.png"
+      },
+      {
+        "pagePath": "pages/matcher/matcher",
+        "text": "红娘",
+        "iconPath": "images/icon/matcher.png",
+        "selectedIconPath": "images/icon/matcher@selected.png"
+      },
+      {
+        "pagePath": "pages/msg/index/index",
+        "text": "消息",
+        "iconPath": "images/icon/msg.png",
+        "selectedIconPath": "images/icon/msg@selected.png"
+      },
+      {
+        "pagePath": "pages/mine/index/index",
+        "text": "我的",
+        "iconPath": "images/icon/mine.png",
+        "selectedIconPath": "images/icon/mine@selected.png"
+      }
+    ]
+  }
+}

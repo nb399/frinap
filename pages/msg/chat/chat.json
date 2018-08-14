@@ -1,0 +1,7 @@
+{
+  "navigationBarTextStyle": "white",
+  "enablePullDownRefresh": false,
+    "usingComponents": {
+      "zan-noticebar": "../../../dist/noticebar/index"
+    }
+}

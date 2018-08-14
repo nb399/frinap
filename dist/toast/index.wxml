@@ -1,0 +1,30 @@
+<view
+  class="zan-toast {{ !message ? 'zan-toast--notitle' : '' }}"
+  wx:if="{{ show }}"
+  bindtap="clearZanToast"
+>
+  <!-- icon 展示 -->
+  <block
+    wx:if="{{ icon || image }}"
+  >
+    <image
+      wx:if="{{ image }}"
+      class="zan-toast__icon zan-toast__icon-image"
+      src="{{ image }}"
+    ></image>
+    <view
+      wx:elif="{{ icon === 'loading' }}"
+      class="zan-toast__icon zan-toast__icon-loading"
+    >
+      <view class="zan-loading"></view>
+    </view>
+    <zan-icon
+      wx:else
+      type="{{ icon }}"
+      class="zan-toast__icon"
+    ></zan-icon>
+  </block>
+
+  <!-- 文案展示 -->
+  <text wx:if="{{ message }}">{{ message }}</text>
+</view>

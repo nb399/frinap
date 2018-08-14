@@ -1,0 +1,8 @@
+{
+    "enablePullDownRefresh": false,
+    "usingComponents": {
+        "zan-popup": "../../../dist/popup/index",
+            "zan-capsule": "../../../dist/capsule/index",
+            "zan-toast":"../../../dist/toast/index"
+      }
+}

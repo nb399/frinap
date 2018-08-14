@@ -1,0 +1,5 @@
+{
+    "usingComponents": {
+      "show-unit": "../../component/show_unit/show_unit"
+    }
+}

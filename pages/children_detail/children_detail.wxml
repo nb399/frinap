@@ -1,0 +1,285 @@
+<!--pages/children_detail/children_detail.wxml-->
+<view class="section-other" wx:if="{{showOtherBtns}}">
+
+<button class="test"   bindtap='goIndex' style="background-image: url('https://tangtuan.oss-cn-hangzhou.aliyuncs.com/picture/home.png')"></button>
+<button class="test"  wx:if="{{canApp}}" open-type='launchApp' binderror="launchAppError" style="background-image: url('https://tangtuan.oss-cn-hangzhou.aliyuncs.com/picture/app.png');"></button>
+</view>
+
+
+<view class='container' wx:if="{{identify==1}}">
+  <view class='info_block profile'>
+    <view class='user-info'>
+      <view class='userHead'>
+        <image wx:if='{{childInfo.parent.certification==1}}' class='identify' src='../../images/icon/identifaction.png'></image>
+        <image wx:else class='identify' src='../../images/icon/unidentifaction.png'></image>
+        <image class='avatar' mode='aspectFill' src="{{childInfo?childInfo.parent.avatarUrl:''}}"></image>
+      </view>
+      <view class='info'></view>
+    </view>
+    <view class='user-info-extra'>
+      <view class='info-extra'>
+        <view class='top'>
+          <text>{{childInfo.parent.location}}</text> |
+          <text>{{childInfo.parent.name}}</text>
+        </view>
+        <view class='info-relationship'>
+          <view>
+            <image class='avatar' mode='widthfix' src="../../images/icon/icon_foot.png"></image>
+          </view>
+          <view>
+            <text class="{{childInfo.relationship_name.id<1?'relationship-man':'relationship-woman'}}">{{childInfo.relationship_name.name}}</text>
+          </view>
+        </view>
+      </view>
+      <view class='info-collect' bindtap='_collectChild' wx:if="{{canCollect}}">
+        <image src="{{childInfo.is_collected?'../../images/icon/collected.png':'../../images/icon/icon@star.png'}}" mode='aspectFill'></image>
+      </view>
+    </view>
+  </view>
+
+  <view class='info_block'>
+
+    <view class='info_title'>
+      <view class='line'></view>
+      <view>孩子相亲信息</view>
+    </view>
+
+    <view class='info-body'>
+      <view class='distinct'></view>
+      <view>
+        <view class='info-item'>
+          <text wx:if='{{childInfo.age}}'>{{childInfo.age}}</text>
+          <text wx:if='{{childInfo.height}}'>{{childInfo.height}}</text>
+          <text wx:if='{{childInfo.education}}'>{{childInfo.education.name}}</text>
+          <text wx:if='{{childInfo.job}}'>{{childInfo.job.name}}</text>
+          <text wx:if='{{childInfo.salary}}'>{{childInfo.salary.name}}</text>
+          <text wx:if='{{childInfo.minority}}'>{{childInfo.minority.name}}</text>
+          <text wx:if='{{childInfo.marital_status}}'>{{childInfo.marital_status.name}}</text>
+          <text wx:if='{{childInfo.native_place}}'>籍贯:{{childInfo.native_place}}</text>
+          <text wx:if='{{childInfo.workplace}}'>工作地:{{childInfo.workplace}}</text>
+          <text wx:if='{{childInfo.somatotype}}'>体型:{{childInfo.somatotype.name}}</text>
+          <text wx:if='{{childInfo.weight}}'>{{childInfo.weight}}</text>
+          <text wx:if='{{childInfo.have_children}}'>{{childInfo.have_children.name}}</text>
+          <text wx:if='{{childInfo.dink}}'>{{childInfo.dink.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class='info_title'>
+      <view class='line'></view>
+      <view>孩子择偶条件</view>
+    </view>
+
+    <view class='info-body'>
+      <view class='distinct'></view>
+      <view>
+        <view class='info-item'>
+          <text wx:if='{{childInfo.requirement.age}}'>{{childInfo.requirement.age}}</text>
+          <text wx:if='{{childInfo.requirement.height}}'>{{childInfo.requirement.height}}</text>
+          <text wx:if='{{childInfo.requirement.marital_status}}'>{{childInfo.requirement.marital_status.name}}</text>
+          <text wx:if='{{childInfo.requirement.education}}'>{{childInfo.requirement.education.name}}</text>
+          <text wx:if='{{childInfo.requirement.job}}'>{{childInfo.requirement.job.name}}</text>
+          <text wx:if='{{childInfo.requirement.salary}}'>{{childInfo.requirement.salary.name}}</text>
+          <text wx:if='{{childInfo.requirement.minority}}'>{{childInfo.requirement.minority.name}}</text>
+          <text wx:if='{{childInfo.requirement.native_place}}'>籍贯:{{childInfo.requirement.native_place}}</text>
+          <text wx:if='{{childInfo.requirement.workplace}}'>工作地:{{childInfo.requirement.workplace}}</text>
+          <text wx:if='{{childInfo.requirement.somatotype}}'>{{childInfo.requirement.somatotype.name}}</text>
+          <text wx:if='{{childInfo.requirement.weight}}'>{{childInfo.requirement.weight}}</text>
+          <text wx:if='{{childInfo.requirement.have_children}}'>{{childInfo.requirement.have_children.name}}</text>
+          <text wx:if='{{childInfo.requirement.dink}}'>婚后是否要孩子:{{childInfo.requirement.dink.name}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class='info_title'>
+      <view class='line'></view>
+      <view>孩子个性说明</view>
+    </view>
+
+    <view class="child-signature {{childInfo.album.length>0?'signature-padding-big':'signature-padding-small'}}">
+      <view class='distinct'></view>
+      <view class='signature'>
+        <text class="{{unspread?'content':''}}">
+          {{childInfo.personal_profile?childInfo.personal_profile:'暂无个性说明'}}
+        </text>
+        <text class='spread-btn' wx:if='{{show_spread_btn}}' class='spread-btn' catchtap='_spread'>
+          <text>{{string_btn}}</text>
+        <text class='fa {{style_btn}}'></text>
+        </text>
+      </view>
+
+      <view class='album'>
+        <block>
+          <view class='albumItem-static'>
+            <block wx:for='{{childInfo.album}}' wx:for-index="idx" wx:for-item="itemName">
+              <view wx:if='{{idx<3}}'>
+                <image data-id='{{itemName.id}}' data-index='{{idx}}' data-url='{{itemName.image_url}}' mode='aspectFill' src='{{itemName.image_url}}' catchtap='_previewImage'></image>
+              </view>
+            </block>
+          </view>
+        </block>
+        <view wx:if='{{childInfo.album.length>3}}' class='moreBtn' catchtap='_previewImage' data-url="{{childInfo.album[3]['image_url']}}">
+          <view>查看</view>
+          <view>更多</view>
+        </view>
+      </view>
+    </view>
+
+  </view>
+
+</view>
+
+<view class='container' wx:else>
+  <view class='info_block profile'>
+    <view class='user-info'>
+      <view class='userHead'>
+        <image wx:if='{{childInfo.certification==1}}' class='identify' src='../../images/icon/redIdentifaction.png'></image>
+        <image wx:else class='identify' src='../../images/icon/unidentifaction.png'></image>
+        <image class='avatar' mode='aspectFill' src="{{childInfo?childInfo.avatarUrl:''}}"></image>
+      </view>
+      <!-- <view class='concave-box'>可委托</view> -->
+    </view>
+    <view class='user-info-extra'>
+      <view class='info-extra'>
+        <view class='top'>
+          <text>{{childInfo.location}}</text> |
+          <text>{{childInfo.name}}</text>
+        </view>
+         <view class='info-relationship'>
+          <view>
+            <image class='avatar' mode='widthfix' src="../../images/icon/matcher@selected.png" ></image> 
+          </view>
+          <view><text class="relationship-woman">全职红娘</text></view>
+        </view> 
+      </view>
+      <view class='info-collect' bindtap='_collectChild'>
+        <image src="{{childInfo.is_collected?'../../images/icon/collected.png':'../../images/icon/icon@star.png'}}" mode='aspectFill'></image>
+      </view>
+    </view>
+  </view>
+
+  <view class='info_block'>
+    <!-- 红娘基本信息 -->
+    <view class='info_title'>
+      <view class='line'></view>
+      <view style="display:flex;justify-content:space-between;width:100%">红娘基本信息<text style='color:#F5649B;' > 红娘评分 {{childInfo.extra.avg_grade}}</text></view>
+      
+    </view>
+
+    <view class='info-body'>
+      <view class='distinct'></view>
+      <view>
+        <view class='info-item'>
+          <text wx:if='{{childInfo.age}}'>{{childInfo.age}}</text>
+          <text wx:if='{{childInfo.education}}'>{{childInfo.education.name}}</text>
+          <text wx:if='{{childInfo.user_job}}'>{{childInfo.user_job.name}}</text>
+          <text wx:if='{{childInfo.user_workplace}}'>{{childInfo.user_workplace}}</text>
+          <text wx:if='{{childInfo.last_actived_at}}'>{{childInfo.last_actived_at+'活跃'}}</text>
+          <text wx:if='{{childInfo.certification}}'>已实名认证</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 红娘简介 -->
+    <view class='info_title'>
+      <view class='line'></view>
+      <view>红娘简介</view>
+    </view>
+
+    <view class="child-signature {{childInfo.album.length>0?'signature-padding-big':'signature-padding-small'}}">
+      <view class='distinct'></view>
+      <view class='signature'>
+        <text class="{{unspread?'content':''}}">
+          {{childInfo.user_profile?childInfo.user_profile:'暂无个性说明'}}
+        </text>
+        <text class='spread-btn' wx:if='{{show_spread_btn}}' class='spread-btn' catchtap='_spread'>
+          <text>{{string_btn}}</text>
+        <text class='fa {{style_btn}}'></text>
+        </text>
+      </view>
+
+    </view>
+
+    <!-- 红娘牵线成功案例 -->
+    <view class='info_title'>
+      <view class='line'></view>
+      <view>红娘牵线成功案例<text style='color:#F5649B;' > ({{childInfo.extra.success_case_count?childInfo.extra.success_case_count+'例':'暂无'}})</text></view>
+    </view>
+
+    <view class='info-body'>
+      <view class='data-box'>
+        <view class="title-box">用户反馈<text style='color:#eee;'> | </text>数据统计</view>
+        <view class="main-box">
+          <view class='info-item' style="color:#ffffff;padding:0 20rpx;">     
+            <text style="background-color:#F5649B;">平均评分：{{childInfo.extra.avg_grade}}</text>
+             <text style="background-color:#F97E80;">平均完成委托用时：{{childInfo.extra.avg_time_consuming}}</text>
+            <text style="background-color:#FDBC00;">平均打赏金额：{{childInfo.extra.avg_reward}}元</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+</view>
+
+<view class='gochat' catchtap='_goChat' wx:if="{{showChatBtn}}">
+  <view class='button' hover-class="button-hover">{{childInfo.have_contacted?'继续沟通':'立即沟通'}}</view>
+</view>
+
+<zan-popup show="{{ showChatModal }}" bindclose="_toggleChatModal" type="bottom">
+  <view class="popup_container">
+    <view class="popup-main">
+      <view class="content-head">
+        <image src="../../images/icon/coin.png" mode="aspectFit"></image>
+      </view>
+      <view class="content-center">
+        <view>
+          <view class="text1">使用
+            <text class="pink">2</text>个汤团和孩子{{childInfo.relationship_name.name}}沟通？</view>
+          <view class="text2">(剩余汤团
+            <text class="pink">{{userinfo.tangtuan_coin}}</text>个)</view>
+        </view>
+        <view class="chatBtnBox">
+          <view class="chatBtn" hover-class="button-hover" catchtap="_chat">立即沟通</view>
+        </view>
+      </view>
+      <view class="content-footer">
+        <view catchtap='_getMoreCoin'>获取更多
+          <text class="pink">汤团</text>
+        </view>
+        <view>
+          <icon type="cancel" color="white" size="30" catchtap="_toggleChatModal"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+</zan-popup>
+
+<zan-popup show="{{ showViewAlbumModal }}" bindclose="_toggleViewChatModal" type="bottom">
+  <view class="popup_container">
+    <view class="popup-main">
+      <view class="content-head">
+        <image src="../../images/icon/coin.png" mode="aspectFit"></image>
+      </view>
+      <view class="content-center">
+        <view>
+          <view class="text1">使用
+            <text class="pink">2</text>个汤团查看相册？</view>
+          <view class="text2">(剩余汤团
+            <text class="pink">{{userinfo.tangtuan_coin}}</text>个)</view>
+        </view>
+        <view class="chatBtnBox">
+          <view class="chatBtn" hover-class="button-hover" catchtap="_viewAlbum">查看</view>
+        </view>
+      </view>
+      <view class="content-footer">
+        <view catchtap='_getMoreCoin'>获取更多
+          <text class="pink">汤团</text>
+        </view>
+        <view>
+          <icon type="cancel" color="white" size="30" catchtap="_toggleViewChatModal"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+</zan-popup>

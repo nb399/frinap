@@ -1,0 +1,35 @@
+/* pages/mine/editSignature/editSignture.wxss */
+.container{
+  background-color: #F6F6F6;
+  height: 100vh;
+  font-size: 28rpx;
+}
+.button-hover{
+  background-image: linear-gradient(to left,#f1898a,#f17ea4);
+}
+.content{
+  padding: 20rpx;
+  position: relative;
+}
+.length{
+  position: absolute;
+  right:12rpx;
+  bottom:12rpx;
+  color: #777;
+}
+.content textarea{
+  width: 650rpx;
+  height: 377rpx;
+  background-color: #fff;
+  border-radius: 5rpx;
+  padding:30rpx;
+}
+.content button{
+  font-size: 17px;
+  margin:0 auto;
+  margin-top:77rpx;
+  background-image:linear-gradient(to left,#f87e7f,#f25d8e);
+  color:#fff;
+  width:94%;
+  box-shadow:0rpx 6rpx 19rpx rgba(255, 0, 130, 0.5);
+}

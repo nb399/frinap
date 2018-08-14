@@ -1,0 +1,13 @@
+<!--pages/mine/editName/editName.wxml-->
+<import src="../../../dist/toast/index.wxml" />
+
+<view class='container'>
+  <view>
+    <input class='name' placeholder='在此填写昵称!' value='{{name}}' bindinput='_getInputName'></input>
+  </view>
+  <view>
+    <button class='saveBtn' catchtap='_saveName'>保存</button>
+  </view> 
+</view>
+
+<zan-toast id="zan-toast-test"></zan-toast>

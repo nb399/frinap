@@ -1,0 +1,86 @@
+<!--pages/msg/index/index.wxml-->
+<view class='main'>
+  <view class="tab-content">
+    <block wx:for="{{chatList}}" wx:for-index="idx" wx:key="{{idx}}">
+      <view class="tab-content-children" data-id='{{item.id}}' catchtap='_goChat' data-idx="{{idx}}">
+        <view class="info-main">
+          <view class="info-left">
+            <image mode="aspectFill" class="info-left-image" src="{{item.user.avatarUrl}}" />
+          </view>
+
+          <view class="info-right">
+            <view class='info-head'>
+              <view class="info-name">
+                <text class="item-name">{{item.user.name}}</text>
+                <!-- <text class="item-relationship">{{item.child.relationship_name.name}}</text>                     <text class='item-clock'>11:36</text> -->
+                <text class="redDot" hidden='{{!haveNewList[idx]}}'><text class='fa fa-circle'></text></text>
+              </view>
+              <view class='info-identification'>
+                <image wx:if="{{item.user.certification==1}}" src='../../images/icon/icon_identification.png' mode='aspectFill'></image>
+                <image wx:elif="{{item.user.certification==0}}" src='../../images/icon/icon_unidentification.png' mode='aspectFill'></image>
+              </view>
+            </view>
+            <view class="info-more" wx:if="{{item.child}}">
+              <text>{{item.child.height}}</text>
+              <text>{{item.child.salary.name}}</text>
+              <text>{{item.child.age}}</text>
+            </view>
+            <view class="info-more" wx:else>
+              <text>红娘</text>
+
+            </view>
+            <!-- <view class="info-more">最新消息:{{lastDialog[idx]['data'][0]['data']}}</view> -->
+            <view class="new-message">最新消息:
+              <view class="template" wx:for="{{ lastDialog[idx]['data'] }}" wx:key="{{idx}}">
+                <template is="{{ item['type']!='emoji'?'txt':'emoji' }}" data="{{ item }}" />
+              </view>
+            </view>
+
+
+  <template name="txt">
+    {{ item.data }}
+  </template>
+
+  <template name="emoji" style="">
+    <image class="avatar" src="{{'../../../images/faces/' + item.data }}" style="width: 30rpx;height: 30rpx;margin-top:6rpx" />
+  </template>
+
+
+
+          </view>
+        </view>
+      </view>
+    </block>
+    <view wx:if="{{!chatList.length}}" class="tab-nothing">暂无消息</view>
+  </view>
+</view>
+
+
+<zan-popup show="{{ showChatModal }}" bindclose="_toggleChatModal" type="bottom">
+  <view class="popup_container">
+    <view class="popup-main">
+      <view class="content-head">
+        <image src="/images/icon/coin.png" mode="aspectFit"></image>
+      </view>
+      <view class="content-center">
+        <view>
+          <view class="text1">使用
+            <text class="pink">5</text>个汤团和孩子{{childInfo.relationship_name.name}}沟通？</view>
+          <view class="text2">(剩余汤团
+            <text class="pink">{{userinfo.tangtuan_coin}}</text>个)</view>
+        </view>
+        <view class="chatBtnBox">
+          <view class="chatBtn" hover-class="button-hover" catchtap="_chat">立即沟通</view>
+        </view>
+      </view>
+      <view class="content-footer">
+        <view catchtap='_getMoreCoin'>获取更多
+          <text class="pink">汤团</text>
+        </view>
+        <view>
+          <icon type="cancel" color="white" size="30" catchtap="_toggleChatModal"></icon>
+        </view>
+      </view>
+    </view>
+  </view>
+</zan-popup>

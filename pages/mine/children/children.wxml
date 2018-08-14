@@ -1,0 +1,528 @@
+<import src="../../../dist/toast/index.wxml" />
+
+<view class='container'>
+  <view class='info_block profile'>
+    <view class='user-info'>
+      <view class='userHead'>
+        <image wx:if="{{userInfo.certification==1}}" class='identify' src='../../../images/icon/identifaction.png'></image>
+        <image wx:elif="{{userInfo.certification==0}}" class='identify' src='../../../images/icon/unidentifaction.png'></image>
+        <view class='avatarBox'>
+          <image class='avatar' mode='aspectFill' src="{{userInfo?userInfo.avatarUrl:''}}"></image>
+        </view>
+      </view>
+      <view class='info'>
+        <view class='item1'>
+          <view class='label uname'>
+            <text>{{userInfo.name}}</text>
+          </view>
+        </view>
+        <view class='item2'>
+          <picker class='label' mode='multiSelector' range='{{aeraData}}' bindchange='_editUserLocation' data-label='location' bindcolumnchange='_bindareacolumnchange' value='{{areaValue}}'>
+            <text>{{location?location:(userInfo.location?userInfo.location:'居住地')}}</text>
+            <image class='arrow arrow2' src="../../../images/icon/arrow@.png"></image>
+          </picker>
+          <picker class='label' range='{{options.relationship_name}}' range-key='name' bindchange='_selectOptions' data-label='relationship_name'>
+            <text>{{basicInfo.relationship_name}}</text>
+            <image class='arrow arrow2' src="../../../images/icon/arrow@.png"></image>
+          </picker>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class='info_block extra' catchtap='_editSignature' data-signa="{{isEditSignature?signature:basicInfo.personal_profile}}">
+    <view class='info_title'>
+      <view class='line'></view>
+      <view>个性说明</view>
+    </view>
+    <view class='info-body'>
+      <view>
+        <view class="info-sign" style='-webkit-line-clamp:{{string_btn=="收起"? 20:2}};'>个性说明:{{isEditSignature?signature:(basicInfo.personal_profile?basicInfo.personal_profile:'点击设置个性签名')}}
+        </view>
+        <text class='spread-btn' wx:if='{{show_spread_btn}}' class='spread-btn' catchtap='_spread'>
+          <text>{{string_btn}}</text>
+        <text class='fa {{style_btn}}'></text>
+        </text>
+      </view>
+    </view>
+
+    <!-- <view class='info-body'>
+      <view class="info-sign">个性说明:{{isEditSignature?signature:(basicInfo.personal_profile?basicInfo.personal_profile:'点击设置个性签名')}}
+      </view> 
+    </view> -->
+    <view class='album'>
+      <block wx:if="{{basicInfo.album.length>5}}">
+        <scroll-view scroll-x="true" class='albumItem-scroll'>
+          <view wx:for='{{basicInfo.album}}' wx:for-index="idx" wx:for-item="itemName">
+            <image data-id='{{itemName.id}}' data-index='{{idx}}' data-url='{{itemName.image_url}}' mode='aspectFill' src='{{itemName.image_url}}' catchtap='_previewImage' catchlongpress="_deleteImage"></image>
+          </view>
+        </scroll-view>
+      </block>
+      <block wx:elif="{{basicInfo.album.length<=5}}">
+        <view class='albumItem-static'>
+          <view wx:for='{{basicInfo.album}}' wx:for-index="idx" wx:for-item="itemName">
+            <image data-id='{{itemName.id}}' data-index='{{idx}}' data-url='{{itemName.image_url}}' mode='aspectFill' src='{{itemName.image_url}}' catchtap='_previewImage' catchlongpress="_deleteImage"></image>
+          </view>
+        </view>
+      </block>
+      <view class='moreBtn' catchtap='_didPressChooseImage'>
+        <view>添加</view>
+        <view>更多</view>
+      </view>
+    </view>
+    <!-- <view class='editBtn' catchtap='_editSignature' data-signa="{{isEditSignature?signature:basicInfo.personal_profile}}"><text>编辑</text></view> -->
+  </view>
+
+  <view class="info_block {{active==0?'basic':'basic1'}}">
+    <view class='inner'>
+      <view class='tab'>
+        <view class='item' catchtap='_changeTabByClick' data-active='0'>
+          <view class="{{active==0?'active':''}}">基本信息</view>
+        </view>
+        <view class='item' catchtap='_changeTabByClick' data-active='1'>
+          <view class="{{active==1?'active':''}}">择偶标准</view>
+        </view>
+      </view>
+      <swiper bindchange='_changeTab' current='{{active}}'>
+        <swiper-item>
+
+          <view class='mySetting'>
+            <view class='mySetting-in'>
+
+              <view class='option' catchtap=''>
+                <view class='option-in'>
+                  <image src='' class='tubiao'></image>
+                  <view>姓名</view>
+                </view>
+                <view class='option-in'>
+                  <input bindinput='_bindNameInput' type='text' placeholder='在此输入姓名' value='{{basicInfo.name}}' />
+                  <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                </view>
+              </view>
+
+              <picker range='{{options.sex}}' range-key='name' data-label="sex" bindchange='_selectOptions' value='{{currentValue.sex.id?currentValue.sex.id:1}}'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>
+                      <text style='color:#f25d8e'>*</text>性别</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.sex}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker mode="date" range-key='name' data-label="birth" bindchange='_selectOptions' start='1918-08-08' end='2018-08-08'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>
+                      <text style='color:#f25d8e'>*</text>生日</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.birth}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{heightArr}}' value='45' data-label="height" bindchange='_selectOptions'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>
+                      <text style='color:#f25d8e'>*</text>身高</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.height}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.salary}}' value='3' range-key='name' data-label="salary" bindchange='_selectOptions' value='{{currentValue.salary.id?currentValue.salary.id:1}}'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>
+                      <text style='color:#f25d8e'>*</text>月收入</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.salary}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.education}}' value='3' range-key='name' data-label="education" bindchange='_selectOptions' value='{{currentValue.education.id?currentValue.education.id:1}}'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>
+                      <text style='color:#f25d8e'>*</text>学历</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.education}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.jobs}}' value='7' range-key='name' data-label="jobs" bindchange='_selectOptions' value='{{currentValue.job.id?currentValue.job.id:1}}'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>
+                      <text style='color:#f25d8e'>*</text>职业</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.jobs}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker mode='multiSelector' range='{{aeraData}}' data-label="work_place" bindchange='_selectOptions' bindcolumnchange='_bindareacolumnchange' value='{{areaValue}}'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>
+                      <text style='color:#f25d8e'>*</text>工作地</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.work_place}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+
+              <picker range='{{options.minority}}' range-key='name' data-label="minority" bindchange='_selectOptions' value='{{currentValue.minority.id?currentValue.minority.id:1}}'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>民族</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.minority}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{weightArr}}' value='20' data-label="weight" bindchange='_selectOptions'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>体重</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.weight}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.somatotype}}' range-key='name' data-label="somatotype" bindchange='_selectOptions' value='{{currentValue.somatotype.id?currentValue.somatotype.id:1}}'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>体型</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.somatotype}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker mode='multiSelector' range='{{aeraData}}' data-label="native_place" bindchange='_selectOptions' bindcolumnchange='_bindareacolumnchange' value='{{areaValue}}'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>籍贯</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.native_place}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.marital_status}}' range-key='name' data-label="marital_status" bindchange='_selectOptions' value='{{currentValue.marital_status.id?currentValue.marital_status.id:1}}'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>婚姻状况</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.marital_status}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.car}}' range-key='name' data-label="car" bindchange='_selectOptions' value='{{currentValue.car.id?currentValue.car.id:1}}'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>是否有车</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.car}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.house}}' range-key='name' data-label="house" bindchange='_selectOptions' value='{{currentValue.house.id?currentValue.house.id:1}}'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>是否有房</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.house}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.have_children}}' range-key='name' data-label="have_children" bindchange='_selectOptions' value='{{currentValue.have_children.id?currentValue.have_children.id:1}}'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>有无小孩儿</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.have_children}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.dink}}' range-key='name' data-label="dink" bindchange='_selectOptions' value='{{currentValue.dink.id?currentValue.dink.id:1}}'>
+                <view class='option'>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>是否想要小孩</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{basicInfo.dink}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+
+            </view>
+          </view>
+
+        </swiper-item>
+
+        <swiper-item>
+
+          <view class='mySetting'>
+            <view class='mySetting-in'>
+
+              <picker mode='multiSelector' range='{{ageRand_requirement}}' bindcolumnchange='_requirementColumnChange' bindchange='_selectRequirement' data-label='age'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>年龄</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.age}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker mode='multiSelector' range='{{heightRand_requirement}}' bindchange='_selectRequirement' data-label='height' bindcolumnchange='_requirementColumnChange'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>身高</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.height}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.education_requirement}}' range-key='name' value='3' bindchange='_selectRequirement' data-label='education'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>学历</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.education}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.salary_requirement}}' range-key='name' value='3' bindchange='_selectRequirement' data-label='salary'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>月收入</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.salary}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+
+              <picker range='{{options.jobs_requirement}}' range-key='name' value='7' bindchange='_selectRequirement' data-label='jobs'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>职业</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.jobs}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.minority_requirement}}' range-key='name' value='3' bindchange='_selectRequirement' data-label='minority'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>民族</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.minority}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker mode='multiSelector' range='{{aeraData}}' bindchange='_selectRequirement' data-label='native_place' bindcolumnchange='_bindareacolumnchange' value='{{areaValue}}'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>籍贯</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.native_place}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker mode='multiSelector' range='{{aeraData}}' data-label="work_place" bindchange='_selectRequirement' bindcolumnchange='_bindareacolumnchange' value='{{areaValue}}'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>工作地</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.work_place}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.marital_status_requirement}}' range-key='name' bindchange='_selectRequirement' data-label='marital_status'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>婚姻状况</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.marital_status}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.car_requirement}}' range-key='name' bindchange='_selectRequirement' data-label='car'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>是否有车</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.car}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.house_requirement}}' range-key='name' bindchange='_selectRequirement' data-label='house'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>是否有房</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.house}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.have_children_requirement}}' range-key='name' bindchange='_selectRequirement' data-label='have_children'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>有无小孩儿</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.have_children}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker range='{{options.dink_requirement}}' range-key='name' bindchange='_selectRequirement' data-label='dink'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>是否想要小孩</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.dink}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+              <picker mode='multiSelector' range='{{weightRand_requirement}}' bindchange='_selectRequirement' data-label='weight' bindcolumnchange='_requirementColumnChange'>
+                <view class='option' catchtap=''>
+                  <view class='option-in'>
+                    <image src='' class='tubiao'></image>
+                    <view>体重</view>
+                  </view>
+                  <view class='option-in'>
+                    <text>{{requirement.weight}}</text>
+                    <image src='../../../images/icon/arrow@.png' class='arrow'></image>
+                  </view>
+                </view>
+              </picker>
+
+
+            </view>
+          </view>
+
+        </swiper-item>
+      </swiper>
+    </view>
+  </view>
+</view>
+
+<view class='submitBtn' catchtap='_saveChildrenInfo'>
+  <view class='button' hover-class='button-hover'>保存</view>
+</view>
+
+
+<zan-toast id="zan-toast-test"></zan-toast>

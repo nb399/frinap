@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "zan-field": "/dist/field/index",
+    "zan-button": "/dist/btn/index",
+    "zan-panel": "/dist/panel/index"
+  },
+  "navigationBarTitleText": "实名认证"
+}

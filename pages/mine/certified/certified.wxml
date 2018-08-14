@@ -1,0 +1,38 @@
+<!--pages/mine/certified/certified.wxml-->
+
+<form bindsubmit="formSubmit" bindreset="formReset" >
+  <zan-panel title="实名信息">
+    <zan-field title="{{form.name.title}}" name="{{ form.name.name }}" placeholder="{{ form.name.placeholder }}" input-type="{{ form.name.inputType }}" right="{{form.name.right}}">
+    </zan-field>
+    <zan-field title="{{form.id.title}}" name="{{form.id.name }}" placeholder="{{ form.id.placeholder }}" right="{{form.id.right}}">
+    </zan-field>
+  </zan-panel>
+  <view class="grey-bar"></view>
+  <zan-panel title="证件照片">
+    <view class="section-photo">
+      <view class="box-photo">
+        <image mode='aspectFit' src="/images/card_font.png"></image>
+        示例照片
+      </view>
+      <view class="box-photo">
+        <image mode='aspectFit' src="{{current_img[0]?current_img[0]:'/images/choose_img.png'}}" bindtap='_chooseImg' data-index='0'></image>
+        身份证正面照
+      </view>
+    </view>
+    <view class="section-photo">
+      <view class="box-photo">
+        <image mode='aspectFit' src="/images/card_back.png"></image>
+        示例照片
+      </view>
+      <view class="box-photo">
+        <image mode='aspectFit' src="{{current_img[1]?current_img[1]:'/images/choose_img.png'}}" bindtap='_chooseImg' data-index='1'></image>
+        身份证反面照
+      </view>
+    </view>
+    <view class="section-tips">
+      提示：
+      <text class="text-tips">{{text}}</text>
+    </view>
+  </zan-panel>
+  <button form-type="submit" style="background-color:#f25d8e;color:#fff;margin:50rpx 0;">提交认证</button>
+</form>

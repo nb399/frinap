@@ -1,0 +1,26 @@
+<!--pages/mine/charge/charge.wxml-->
+<view class='container'>
+
+  <view class='tips'>
+    <view class='tips-title'>您还剩余 <text class='num'>{{userinfo.tangtuan_coin}}</text> 个汤团</view>
+    <view class='tips-placeholder'>请选择充值金额</view>
+  </view>
+
+  <view class='charge-item'>  
+    <block  wx:for="{{packagesList}}">
+      <view class="item {{index==selectedPackage?'color-pink':''}}"  data-id='{{item.id}}' data-index='{{index}}' catchtap='_selectPackage'>
+          <view class='item-left'>
+            <image src='../../../images/icon/coin.png'></image>
+            <text>{{item.tangtuan_coin}}汤团</text>
+          </view>
+          <view class='item-right'>
+            <text>￥{{item.price}}</text>
+            <zan-icon type="{{index==selectedPackage?'checked':'passed'}}" class="{{index==selectedPackage?'color-pink':''}}"></zan-icon>
+          </view>
+      </view>
+    </block>  
+    <view class='optBox'>
+      <button class='buyBtn' bindtap='byNow'>确认购买</button>
+    </view>
+  </view>
+</view>

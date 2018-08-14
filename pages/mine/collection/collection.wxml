@@ -1,0 +1,70 @@
+<!--pages/home/home.wxml-->
+<import src="../../dist/loadmore/index.wxml" />
+
+<view class="main" hidden='{{loading}}'>
+
+  <view class="tab-content">
+
+    <block wx:for="{{collectionList}}">
+      <view class="tab-content-children" data-person='{{item}}' catchtap='_childDetail'>
+        <image src="/images/hongniang_cover.png" wx:if="{{item.user.identity==2}}" class="cover-img"></image>
+        <view class="info-main">
+          <view class="info-left">
+
+            <image mode="aspectFill" class="info-left-image" src="{{item.user.avatarUrl}}" />
+          </view>
+
+          <view class="info-right">
+            <view class='info-head'>
+              <view class="info-name {{item.user.identity==1?'user-color':'matcher-color'}}">{{item.user.name}}
+                <text style="color:#eee">|</text>{{item.user.identity==2?item.user.user_sex.name:item.child.relationship_name .name}}
+              </view>
+
+            </view>
+            <view class="info-more" wx:if="{{item.user.identity==1}}">
+                   <text>{{item.child.age}}</text>
+        <text>{{item.child.height}}</text>
+        <text>{{item.child.salary.name}}</text>
+            </view>
+            <view class="info-more" wx:elif="{{item.user.identity==2}}">
+                    <text>{{item.user.user_job.name}}</text>
+                      <text >{{item.user.user_workplace}}</text>
+                        <text >{{item.user.age}}</text>
+           
+            </view>
+          </view>
+
+          <view class='info-collect' catchtap='_deleteCollectChild' data-collection_id="{{item.id}}" data-index="{{index}}">
+            <image src='../../../images/icon/icon_delete.png' mode='aspectFill'></image>
+          </view>
+        </view>
+
+        <view class="info-sign">
+          <text wx:if="{{item.user.identity==1}}">个性说明:{{item.child.personal_profile?item.child.personal_profile:'还没有填写个性简介'}}</text>
+          <text wx:else>个性说明:{{item.user.user_profile?item.user.user_profile:'还没有填写个性简介'}}</text>
+        </view>
+
+      </view>
+    </block>
+<block wx:if="{{!collectionList.length}}">
+<view class="tab-nothing">暂无收藏</view>
+</block>
+  </view>
+
+  <view hidden='{{!LoadingMore}}'>
+    <view class="canvas4">
+      <view class="spinner4"></view>
+      <!-- <text class='loadingText'>加载中...</text> -->
+    </view>
+  </view>
+</view>
+
+<view hidden='{{!loading}}'>
+  <view class="canvas1">
+    <view class="spinner1 spinnerMax">
+      <view class="spinner1 spinnerMid">
+        <view class="spinner1 spinnerMin"></view>
+      </view>
+    </view>
+  </view>
+</view>

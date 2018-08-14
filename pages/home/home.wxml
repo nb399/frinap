@@ -1,0 +1,29 @@
+<!--pages/home/home.wxml-->
+<import src="../../dist/loadmore/index.wxml" />
+
+<view class="main" hidden='{{loading}}'>
+
+    <view class="tab-content">
+<show-unit wx:for="{{ChildrenList}}" person="{{item}}" identity="1" >
+</show-unit>
+    <view class="nomore-line" wx:if="{{noMore}}">—— 我是有底线的 ——</view>
+    </view>
+
+    <view hidden='{{LoadingMore}}'>
+      <view class="canvas4">
+        <view class="spinner4"></view>   
+        <!-- <text class='loadingText'>加载中...</text> -->
+      </view>
+    </view>
+</view>
+
+<view hidden='{{!loading}}'>
+    <view class="canvas1" >
+      <view class="spinner1 spinnerMax">
+        <view class="spinner1 spinnerMid">
+          <view class="spinner1 spinnerMin"></view>
+        </view>
+      </view>
+    </view>
+</view>
+

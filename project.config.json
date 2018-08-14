@@ -1,0 +1,145 @@
+{
+	"description": "项目配置文件。",
+	"setting": {
+		"urlCheck": false,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.0.8",
+	"appid": "wxcf7060b98a1e09d7",
+	"projectname": "qinjialaile_02",
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 8,
+			"list": [
+				{
+					"id": -1,
+					"name": "chatroom",
+					"pathName": "pages/msg/chat/chat",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "实名认证",
+					"pathName": "pages/mine/certified/certified",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "完善资料",
+					"pathName": "pages/guide/guide",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的",
+					"pathName": "pages/mine/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "红娘",
+					"pathName": "pages/matcher/matcher",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "消息",
+					"pathName": "pages/msg/index/index",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的收藏",
+					"pathName": "pages/mine/collection/collection",
+					"query": ""
+				},
+				{
+					"id": 7,
+					"name": "红娘详情",
+					"pathName": "pages/children_detail/children_detail",
+					"query": "child_id=1097&identify=2"
+				},
+				{
+					"id": 8,
+					"name": "孩子详情",
+					"pathName": "pages/children_detail/children_detail",
+					"query": "child_id=85&identify=1",
+					"scene": "1036",
+					"referrerInfo": {}
+				},
+				{
+					"id": -1,
+					"name": "充值",
+					"pathName": "pages/mine/charge/charge",
+					"query": ""
+				},
+				{
+					"id": 10,
+					"name": "777——老邪",
+					"pathName": "pages/msg/chat/chat",
+					"query": "username={\"myName\":{\"keys\":[\"myUsername\",\"default_avatarurl\",\"token\",\"userinfo\",\"hxname\",\"uptoken\",\"uptoken_deadtime\",\"QaccessToken\",\"msgCount\",\"chatList\",\"haveNewList\",\"lastTime\",\"lastDialog\",\"15669961669_98117681888837_1092\"],\"currentSize\":4,\"limitSize\":10240},\"your\":\"15669961669_981\"}&user_name=老邪&avatarUrl=http://pajsl59qn.bkt.clouddn.com/1530631693000.jpg"
+				},
+				{
+					"id": -1,
+					"name": "首页",
+					"pathName": "pages/home/home",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "我的详情",
+					"pathName": "pages/mine/children/children",
+					"query": ""
+				},
+				{
+					"id": 13,
+					"name": "签名编辑",
+					"pathName": "pages/mine/editSignature/editSignture",
+					"query": " signature="
+				},
+				{
+					"id": 14,
+					"name": "扫码（看孩子）",
+					"pathName": "pages/children_detail/children_detail",
+					"query": "child_id=5&identify=1&from=1",
+					"scene": "1036",
+					"referrerInfo": {}
+				},
+				{
+					"id": 15,
+					"name": "扫码（帮红娘）",
+					"pathName": "pages/children_detail/children_detail",
+					"query": "child_id=26&identify=2&from=2"
+				},
+				{
+					"id": -1,
+					"name": "阿里upload",
+					"pathName": "pages/ali/ali",
+					"query": "",
+					"scene": "1036",
+					"referrerInfo": {}
+				}
+			]
+		}
+	}
+}

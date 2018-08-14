@@ -1,0 +1,20 @@
+/* pages/mine/editName/editName.wxss */
+.name{
+  width: 95%;
+  border-bottom: solid 1rpx #808080;
+  margin: 0 auto;
+  margin-top: 47rpx;
+  font-size: 28rpx;
+}
+.saveBtn{
+  font-size: 17px;
+  margin:0 auto;
+  margin-top:77rpx;
+  background-image:linear-gradient(to left,#f87e7f,#f25d8e);
+  color:#fff;
+  width:94%;
+  box-shadow:0rpx 6rpx 19rpx rgba(255, 0, 130, 0.5);
+}
+.button-hover{
+  background-image: linear-gradient(to left,#f1898a,#f17ea4);
+}

@@ -1,0 +1,113 @@
+<view class="main">
+  <zan-noticebar text="更多体验，更高的相亲效率，就到应用市场下载“亲家来了”APP吧！！！" speed="20" scrollable="true" />
+  <view wx:if="{{recordStatus != RecordStatus.HIDE}}" class="modal modal-record" bindtap="toggleRecordModal">
+    <view class="modal-body" catchtap="toggleWithoutAction">
+      <text class="desc">{{RecordDesc[recordStatus]}}</text>
+      <view class="dot" catchtouchstart="handleRecording" catchtouchmove="handleRecordingMove" catchtouchend="handleRecordingCancel" catchtouchcancel="handleRecordingCancel">
+        <image class="icon-mic" src="../../../images/mic@2x.png" />
+      </view>
+    </view>
+  </view>
+
+  <scroll-view scroll-y="true" class="scroll_view" class="{{ view }}" bindtap="cancelEmoji" scroll-into-view="{{ toView }}" style="top:{{topDis}}rpx">
+    <view class="message" wx:for="{{ chatMsg }}"  id="{{ item.mid }}">
+      <view class="time">
+        <text>{{item.time}}</text>
+      </view>
+      <view class="main" class="{{ item.style }}" style="text-align:{{(item.msg.type != 'meet'&&item.msg.type != 'phone'&&item.msg.type != 'location'&&item.msg.type != 'commission')?'':'center'}}">
+        <image class="avatar" mode='aspectFill' src="{{item.style=='self'?myAvatarUrl:yourAvatarUrl}}" wx:if="{{item.msg.type != 'meet'&&item.msg.type != 'phone'&&item.msg.type != 'location'&&item.msg.type != 'commission'}}" catchtap='{{item.style=="self"?"":"_goToPerson"}}' />
+        <view class="{{(item.msg.type != 'meet'&&item.msg.type != 'phone'&&item.msg.type != 'location'&&item.msg.type != 'commission')?'msg':'request'}}">
+         
+          <block wx:if="{{ item.msg.type == 'img' || item.msg.type == 'audio' || item.msg.type == 'video' || item.msg.type == 'audio'}}">
+            <template is="{{ item.msg.type }}" data="{{ item, msgView,currentAudioId }}" />
+          </block>
+          <block wx:if="{{ item.msg.type == 'meet'}}">
+            <template is="tips" data="{{ item, msgView }}" />
+          </block>
+          <block wx:if="{{item.msg.type == 'phone' }}">
+            <template is="tips" data="{{ item, msgView }}" />
+          </block>
+          <block wx:if="{{item.msg.type == 'location' }}">
+            <template is="tips2" data="{{ item, msgView }}" />
+          </block>
+          <block wx:if="{{item.msg.type == 'commission' }}">
+            <template is="tips2" data="{{ item, msgView }}" />
+          </block>
+          <block wx:elif="{{ item.msg.type == 'txt' || item.msg.type == 'emoji' }}">
+            <view class="template" wx:for="{{ item.msg.data }}" >
+              <template is="{{ item.type }}" data="{{ item }}" />
+            </view>
+          </block>
+        </view>
+
+      </view>
+    </view>
+  </scroll-view>
+  <template name="tips">
+    <text style="margin-top: 2px;">{{ item.msg.type == 'phone'?'对方发起换手机，请到亲家来了APP查看！':'对方发起约见面，请到亲家来了APP查看！'}}</text>
+  </template>
+  <template name="tips2">
+    <text style="margin-top: 2px;">{{ item.msg.type == 'location'?'对方发送了定位，请到亲家来了APP查看！':'对方发起委托，请到亲家来了APP查看！'}}</text>
+  </template>
+
+
+  <template name="txt">
+    <text style="float: left;margin-top: 2px;">{{ item.data }}</text>
+  </template>
+
+  <template name="emoji">
+    <image class="avatar" src="{{'../../../images/faces/' + item.data }}" style="width: 25px;height: 25px;margin: 0 0 2px 0;float: left;" />
+  </template>
+  <template name="img">
+    <image class="" src="{{ item.msg.data[0].data }}" style="width:90px;height: 120px;margin: 2px auto;" mode="aspectFit" bindtap="previewImage" data-url="{{ item.msg.data[0].data }}" />
+  </template>
+  <template name="video">
+    <video src="{{ item.msg.data }}" controls autoplay/>
+  </template>
+
+  <template name="audio">
+    <!-- <audio src="{{ item.msg.url }}" controls autoplay/> -->
+    <image src='{{item.mid==currentAudioId?"/images/audioPlaying.gif":"/images/audioP.png"}}' bindtap='playRecord' data-url='{{ item.msg.data[0].data}}' data-mid="{{item.mid}}" style="width:40rpx;height:52rpx;"></image>
+  </template>
+
+
+  <view class="room_bar">
+    <form bindreset="cleanInput">
+      <view class="f-row">
+        <input wx:if="{{!showRecordHandler}}" class="f news" type="text" value="{{ inputMessage }}" placeholder="输入新消息" placeholder-style="color:#CFCFCF;padding-left:5px;" bindinput="bindMessage" confirm-type="send" bindconfirm="sendMessage" confirm-hold="true"
+        />
+        <button wx:else class="f btn-recording" catchtouchstart="handleRecording" catchtouchend="handleRecordingCancel" catchtouchcancel="handleRecordingCancel">按住 说话
+        </button>
+        <button class="send_btn" bindtap="sendMessage" >发送</button>
+      </view>
+    </form>
+    <swiper class="emoji_list" class="{{ show }}" indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
+      <block>
+        <swiper-item>
+          <view class="emoji_item">
+            <image wx:for="{{ emojiObj.map1 }}" src="{{ emojiObj.path + item }}"  bindtap="sendEmoji" data-emoji="{{ index }}" />
+          </view>
+          <view class="emoji_item">
+            <image wx:for="{{ emojiObj.map2 }}" src="{{ emojiObj.path + item }}"  bindtap="sendEmoji" data-emoji="{{ index }}" />
+          </view>
+          <view class="emoji_item">
+            <image wx:for="{{ emojiObj.map3 }}" src="{{ emojiObj.path + item }}"  bindtap="sendEmoji" data-emoji="{{ index }}" />
+          </view>
+        </swiper-item>
+      </block>
+      <block class="second">
+        <swiper-item>
+          <view class="emoji_item">
+            <image wx:for="{{ emojiObj.map4 }}" src="{{ emojiObj.path + item }}"  bindtap="sendEmoji" data-emoji="{{ index }}" />
+          </view>
+          <view class="emoji_item">
+            <image wx:for="{{ emojiObj.map5 }}" src="{{ emojiObj.path + item }}"  bindtap="sendEmoji" data-emoji="{{ index }}" />
+          </view>
+          <view class="emoji_item">
+            <image wx:for="{{ emojiObj.map6 }}" src="{{ emojiObj.path + item }}"  bindtap="sendEmoji" data-emoji="{{ index }}" />
+          </view>
+        </swiper-item>
+      </block>
+    </swiper>
+  </view>
+</view>
